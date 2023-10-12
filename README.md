@@ -1,2 +1,1 @@
-# cursosql
-Curso Banco de dados SQL
+Nesse repositorio estarei adicionando informações que estou adquirindo no decorrer do curso.
