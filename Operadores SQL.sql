@@ -60,3 +60,32 @@ where first_name regexp '^a|b'         -- regexp  : procura todos os dados que i
 where first_name regexp '^a|^b'        -- regexp  : procura todos os dados que inicia com a letra "a" e inica com a letra "b"
 where first_name regexp '[bcd]a'       -- regexp  : procura todos os dados com a letra "ba", "ca" e "da"
 where first_name regexp '^[bcd]a'      -- regexp  : procura todos os dados que inicia com a letra "ba", "ca" e "da"
+
+-- Join
+use sakila;
+select * from customer join payment          -- join : seleciona todas as informações de duas tabelas
+on customer.customer_id = payment.payment_id -- on   : sincroniza as informações das tabelas
+
+use sakila;
+select customer.customer_id,
+       customer.first_name, 
+       customer.last_name,
+       address,
+       payment.rental_id,
+       payment.amount                       -- selecionando as informações que irão aparecer
+from customer 
+join payment on customer.customer_id = payment.payment_id -- sincronizando as informações das tabelas
+join address on customer.customer_id = address_id         -- adiconando mais uma tabela
+
+-- Alia : abreviação do nome da coluna
+use sakila;
+select cus.customer_id,
+       cus.first_name, 
+       cus.last_name,
+       adr.address,
+       pay.rental_id,
+       pay.amount
+from customer cus
+join payment pay on cus.customer_id = pay.payment_id
+join address adr on cus.customer_id = adr.address_id
+-- "cus", "pay" , "adr" deve ser colocado apos o nome da coluna
