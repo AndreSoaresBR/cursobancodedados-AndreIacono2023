@@ -75,7 +75,7 @@ select customer.customer_id,
        payment.amount                       -- selecionando as informações que irão aparecer
 from customer 
 join payment on customer.customer_id = payment.payment_id -- sincronizando as informações das tabelas
-join address on customer.customer_id = address_id         -- adiconando mais uma tabela
+join address on customer.customer_id = address_id         -- adicionando mais uma tabela
 
 -- Alia : abreviação do nome da coluna
 use sakila;
@@ -88,4 +88,46 @@ select cus.customer_id,
 from customer cus
 join payment pay on cus.customer_id = pay.payment_id
 join address adr on cus.customer_id = adr.address_id
--- "cus", "pay" , "adr" deve ser colocado apos o nome da coluna
+-- "cus", "pay" , "adr" abreviação ser colocado apos o nome da coluna
+
+-- Adicionando uma linha a tabela
+-- Coluna language possui (language_id, name, last_update)
+use sakila;
+insert into language
+values (default, 'Portuguese', '2023-10-18 20:39:00')
+-- Seleciono a coluna, depois adiciono as informações, "default" ira manter a sequencia da coluna.
+
+-- Adicionando uma linha em multiplas tabelas
+-- Coluna city (city_id, city, country_id, last_update)
+-- Coluna country (country_id, country, last_update)
+use sakila;
+insert into country
+values
+	(default, 'Brasil2' , '2023-10-18 20:48:00');
+insert into city
+values
+	(default, 'Sao Jose', last_insert_id(), '2023-10-18 20:48:00')
+-- Brasil2 foi adicionado com country_id 110
+-- Sao Jose foi adicionado com city_id 601 onde "last_insert_id()" foi o ultimo country_id adicionado, no caso Brasil2
+-- No lugar de "last_insert_id()" posso colocar no numero do country_id que desejar, ex: 110
+
+-- Copiando uma tabela completa
+use sakila;
+create table payment_backup as -- criando o nome da nova tabela
+select * from payment
+
+-- Removendo uma tabela
+Clico com o botao direito na tabela, seleciono 'Truncate table' para remover as informações da tabela
+Clico com o botao direito na tabela, seleciono 'Drop table' para remover a tabela completa
+
+-- Atualizando a informação da tabela
+use sakila;
+update payment
+set amount = 15.99
+where payment_id = 1
+-- Seleciono a tabela, depois a coluna "=" nova informação, depois escolho o registro especifico
+
+-- Deletando um registro
+use sakila;
+delete from payment
+where payment_id = 1001
