@@ -109,7 +109,7 @@ values
 	(default, 'Sao Jose', last_insert_id(), '2023-10-18 20:48:00')
 -- Brasil2 foi adicionado com country_id 110
 -- Sao Jose foi adicionado com city_id 601 onde "last_insert_id()" foi o ultimo country_id adicionado, no caso Brasil2
--- No lugar de "last_insert_id()" posso colocar no numero do country_id que desejar, ex: 110
+-- no lugar de "last_insert_id()" posso colocar no numero do country_id que desejar, ex: 110
 
 -- Copiando uma tabela completa
 use sakila;
@@ -125,9 +125,60 @@ use sakila;
 update payment
 set amount = 15.99
 where payment_id = 1
--- Seleciono a tabela, depois a coluna "=" nova informação, depois escolho o registro especifico
+-- seleciono a tabela, depois a coluna "=" nova informação, depois escolho o registro especifico
 
 -- Deletando um registro
 use sakila;
 delete from payment
 where payment_id = 1001
+
+-- SQL Funções
+-- AVG()   : verificar qual o valor medio
+-- COUNT() : verificar quantas vendas feitas
+-- FIRST() : verificar qual o primeiro valor
+-- LAST()  : verificar qual o ultimo valor
+-- MAX()   : verificar qual o valor mais alto
+-- MIN()   : verificar qual o valor mais baixo
+-- SUM()   : verificar qual a soma dos valores
+-- USING() : seleciona coluna como referencia
+
+use sakila;
+select 
+	max(amount) as Maior,
+    min(amount) as Menor,
+    avg(amount) as 'Media de valores',
+    sum(amount) as 'Total de vendas',
+    count(amount) as 'Numeros de vendas'
+from payment
+-- praticamente foi feito um resumo da tabela
+
+use sakila;
+select customer_id,
+	sum(amount) as total
+from payment
+group by customer_id
+-- selecionado o total de vendas
+-- selecionado por grupo
+
+use sakila;
+select 
+	cus.customer_id as ID,
+	cus.first_name as Nome,
+	cus.last_name as Sobrenome,
+	sum(amount) as Total,
+    count(amount) as Compras
+from payment pay
+join customer cus using(customer_id)
+group by customer_id
+having Total >= 150 and Compras >= 40
+order by Total desc
+-- adicionado mais colunas
+-- adicionado as : apelido
+-- selecionando o total de vendas
+-- selecionando o total de compras
+-- tabela de pagamento
+-- adicionando tabela 'customer'
+-- usando 'customer_id' como referencia
+-- selecionado por grupo
+-- feito filtro por valor e compras
+-- selecionado por ordem descrecente
