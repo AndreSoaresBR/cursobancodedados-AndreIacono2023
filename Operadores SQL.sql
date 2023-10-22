@@ -182,3 +182,38 @@ order by Total desc
 -- selecionado por grupo
 -- feito filtro por valor e compras
 -- selecionado por ordem descrecente
+
+-- Criando uma subquery
+use sakila;
+select * from payment
+where amount > 
+(
+    select AVG (amount) from payment
+)
+-- selecionado o 'amount' e foi pedido para mostrar todos os pagamentos maiores '>' que o valor medio 'AVG'
+
+use sakila;
+select max(amount) from payment
+where customer_id = 1
+-- selecionado o 'customer_id = 1' e foi pedido para mostrar o maior valor de compra dele 'max(amount)'
+
+use sakila;
+select * from payment
+where amount =
+(
+	select max(amount) from payment
+    where customer_id = 1
+)
+-- selecionado o 'amount' e foi pedido para mostrar todos os pagamentos iguais ao maior valor do 'customer_id = 1'
+
+use sakila;
+select * from customer
+where customer_id in
+(
+    select customer_id from payment
+    group by customer_id
+    having count(*) > 35
+)
+-- selecionado o 'customer' e foi pedido para mostrar o'customer_id' de acordo com a tabela 'payment'
+-- selecionado o 'customer_id' e foi pedido para mostrar todas as compras feitas
+-- foi filtrado as comprar maiores que 35
