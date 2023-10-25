@@ -217,3 +217,37 @@ where customer_id in
 -- selecionado o 'customer' e foi pedido para mostrar o'customer_id' de acordo com a tabela 'payment'
 -- selecionado o 'customer_id' e foi pedido para mostrar todas as compras feitas
 -- foi filtrado as comprar maiores que 35
+
+--Views - criando atalho para a query
+use sakila;
+create view vendas_por_cliente as
+select 
+	cus.customer_id, 
+    cus.first_name, 
+    cus.last_name,
+    pay.amount
+from customer cus
+join payment pay
+on cus.customer_id = pay.payment_id
+-- esse seria o codigo completo
+
+SELECT * FROM sakila.vendas_por_cliente
+-- criando a view, todo aquele codigo se resume a este
+
+SELECT * FROM sakila.vendas_por_cliente
+where amount >= 9.99
+-- em poucas linhas você pesquisa na view criada
+
+use sakila;
+create or replace view vendas_por_cliente as
+select 
+	cus.customer_id, 
+    cus.first_name, 
+    cus.last_name,
+    pay.amount
+from customer cus
+join payment pay
+on cus.customer_id = pay.payment_id
+order by pay.amount desc 
+-- 'create or replace view' serve para atualizar uma view ja criada
+-- adicionado 'order by'
