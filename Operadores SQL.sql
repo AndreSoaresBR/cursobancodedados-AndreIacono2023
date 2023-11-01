@@ -251,3 +251,61 @@ on cus.customer_id = pay.payment_id
 order by pay.amount desc 
 -- 'create or replace view' serve para atualizar uma view ja criada
 -- adicionado 'order by'
+
+-- Database
+create database mapa_mundo; -- cria uma query
+drop database mapa_mundo;   -- deleta uma query
+
+use mapa_mundo;
+create table continentes
+(id int not null auto_increment,
+ continente varchar(200) not null,
+ primary key (id)
+);
+alter table continentes add 'xxx' varchar (200) not null -- adicionando mais coluna
+
+insert into continentes (continente)
+values
+('America'), ('Africa'), ('Asia'),('Europa'), ('Oceania'),('Antartida');
+-- inserindo valores na coluna
+
+create table paises 
+(id int not null auto_increment,
+ pais varchar(200) not null,
+ sigla varchar(200) not null,
+ continente_id int not null,
+ primary key (id),
+ foreign key (continente_id) references continentes(id)
+);
+-- usando 'continente_id' e referenciando na tabela 'continentes(id)'
+
+insert into paises (pais, sigla, continente_id)
+values
+('Brasil', 'BRA', '1'),
+('Argentina', 'ARG', '1'),
+('Alemanha', 'DEU', '4'),
+('Portugal', 'PRT', '4');
+
+create table estados
+(id int not null auto_increment,
+ estado varchar(200) not null,
+ sigla varchar(200) not null,
+ capital varchar(200) not null,
+ pais_id int not null,
+ primary key (id),
+ foreign key (pais_id) references paises(id)
+ );
+ 
+insert into estados (estado, sigla, capital, pais_id)
+values
+('Santa Catarina', 'SC', 'Florianopolis', '1'),
+('Rio Grande do Sul', 'RS', 'Porto Alegre', '1'),
+('Buenos Aries', 'BA', 'La Plata', '2'),
+('La Pampa', 'AR-L', 'Santa Rosa', '2'),
+('Berlim', 'BE', 'Barlim', '3'),
+('Brandenburg', 'BB', 'Potsdam', '3'),
+('Aveiro', 'x', 'Aveiro', '4'),
+('Faro', 'x', 'Faro', '4');
+
+-- RENAME TABLE xxx TO xxx; -- para renomar uma tabela
+-- ALTER TABLE xxx CHANGE xxx xxx VARCHAR(200); -- selecione a tabela, depois a coluna atual e depois a nova coluna
