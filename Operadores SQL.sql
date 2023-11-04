@@ -309,3 +309,38 @@ values
 
 -- RENAME TABLE xxx TO xxx; -- para renomar uma tabela
 -- ALTER TABLE xxx CHANGE xxx xxx VARCHAR(200); -- selecione a tabela, depois a coluna atual e depois a nova coluna
+
+-- Usuarios e senhas
+use mysql;
+select * from user -- visualizando os usuarios
+
+create user Ana identified by '1234'; -- criando usuario 'Ana' e senha '1234'
+create user João@localhost identified by '1234'; -- acesso apenas pelo 'localhost' - servidor
+create user Priscila@empresa.com identified by '1234'; -- acesso apenas dentro da empresa
+drop user Priscila@empresa.com; -- removendo usuario
+set password for João@localhost = '4444'; -- alterando senha
+set password = '4444'; -- alterando senha do usuario ja logado
+Administration - Users and Privileges - Selecionar usuario - trocar senha OU Expire Password para digitar nova senha ao logar - Apply. -- alterando senha no Workbench
+
+-- Privilegios
+show grants for Ana; -- verificando privilegios
+
+grant select, insert, update, delete
+on sakila.*
+to Ana;
+-- adicionando privilegios / escolhendo database '.*' todas as tabelas / escolhendo usuario
+
+grant all
+on sakila.*
+to Ana;
+-- adicionando todos os privilegios para database especifica
+
+grant all
+on *.*
+to João@localhost
+-- adicionando todos os privilegios para todas as database
+
+revoke all -- ou update, selecet...
+on sakila.*
+from Ana;
+-- removendo todos os privilegios
